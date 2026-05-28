@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nerdeYesek — Türkiye'nin Yemek Sosyal Medyası</title>
+  <meta name="description" content="nerdeYesek — Çevrende ne yeniliyor? Mekanları keşfet, yorumları oku, lezzetleri paylaş." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #C0392B;
+      --orange-dark: #96281B;
+      --bg: #0A0A0A;
+      --surface: #1A1A1A;
+      --surface2: #242424;
+      --text: #FFFFFF;
+      --text-muted: #A0A0A0;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--orange); }
+
+    .nav-badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 120px 24px 80px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(192,57,43,0.12);
+      border: 1px solid rgba(192,57,43,0.3);
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 8vw, 64px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .store-btn:hover {
+      background: var(--surface);
+      border-color: rgba(192,57,43,0.4);
+      transform: translateY(-2px);
+    }
+
+    .store-btn .store-icon { font-size: 22px; line-height: 1; }
+    .store-btn .store-text small { display: block; font-size: 11px; color: var(--text-muted); }
+
+    .store-btn.soon {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .coming-soon-badge {
+      background: rgba(192,57,43,0.15);
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: auto;
+    }
+
+    /* FEATURES */
+    .section {
+      padding: 64px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+
+    .section h2 {
+      text-align: center;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover { border-color: rgba(192,57,43,0.3); }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 80px 24px;
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange);
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      max-width: 960px;
+      margin: 0 auto;
+      gap: 16px;
+    }
+
+    .footer-logo { font-size: 16px; font-weight: 700; }
+    .footer-logo span { color: var(--orange); }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 12px;
+      width: 100%;
+      text-align: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/"><span>nerdeYesek</span></a>
+    <span class="nav-badge">Yakında</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">
+      🍽️ Türkiye'nin Yemek Sosyal Medyası
+    </div>
+    <h1>Çevrende<br /><span>ne yeniliyor?</span></h1>
+    <p>
+      Mekanları keşfet, yorumları oku, lezzetleri paylaş.
+      Gerçek insanların gerçek deneyimleri — reklam yok, algoritma yok.
+    </p>
+    <div class="store-buttons">
+      <a href="#" class="store-btn soon">
+        <span class="store-icon">🤖</span>
+        <span class="store-text">
+          <small>İNDİR</small>
+          Google Play
+        </span>
+        <span class="coming-soon-badge">Yakında</span>
+      </a>
+      <a href="#" class="store-btn soon">
+        <span class="store-icon"></span>
+        <span class="store-text">
+          <small>İNDİR</small>
+          App Store
+        </span>
+        <span class="coming-soon-badge">Yakında</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="divider"></div>
+  <section class="section">
+    <div class="section-label">Özellikler</div>
+    <h2>Yemek kültürü,<br />sosyal medya oldu</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>Yakınımdaki Mekanlar</h3>
+        <p>Konumuna göre en yakın restoranları haritada gör. Seni bekleyen lezzetler bir tık uzakta.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <h3>Fotoğraflı Yorumlar</h3>
+        <p>Deneyimini fotoğraf ve puanla paylaş. Gerçek kişilerden gerçek yorumlar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <h3>Keşfet Akışı</h3>
+        <p>En çok beğenilen mekanları ve trend lezzetleri keşfet. Hiçbir iyi restoran gizli kalmasın.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Takip Et</h3>
+        <p>Zevkine güvendiğin insanları takip et, onların gittiği yerleri takip et.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Türkiye Sıralaması</h3>
+        <p>Yorum yap, beğen, kazan. Türkiye genelinde puanını yükselt ve öne çık.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Anlık Bildirimler</h3>
+        <p>Yorumların beğenilince, takipçilerin paylaşım yapınca anında haber al.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="divider"></div>
+  <section class="cta-section">
+    <h2>Lansmana hazır<br />mısın?</h2>
+    <p>nerdeYesek yakında iOS ve Android'de. İlk duyuranlardan olmak için bizi takip et.</p>
+    <a href="mailto:info@nerdeyesek.tr" class="cta-btn">
+      📬 Bizi Takip Et
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span>nerdeYesek</span></div>
+    <div class="footer-links">
+      <a href="/privacy">Gizlilik Politikası</a>
+      <a href="/kvkk">KVKK</a>
+      <a href="mailto:info@nerdeyesek.tr">İletişim</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 Virtual Stüdyo Mimarlık Yazılım İnşaat San. ve Tic. Ltd. Şti. — Tüm hakları saklıdır.
+    </div>
+  </footer>
+
+</body>
+</html>
